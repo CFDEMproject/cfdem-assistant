@@ -55,5 +55,5 @@ See `references/strategies/STRATEGIES.md`
 
 ## CFDEM Coupling Documentation
 
-The CFDEM(R)/CFDEMcoupling documentation is not public.
-Guidance here is sourced from internal material, not fetched from the web — do not search online for CFDEM/CFDEMcoupling docs.
+The CFDEM(R)/CFDEMcoupling documentation is not public yet, so use the local copy bundled with the Aspherix installation instead of searching the web for it.
+See `references/CFDEM_DOC_SEARCH.md` for how to find and read the right page — same search strategy as Aspherix Assistant's public docs, just against a local path for now.

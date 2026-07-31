@@ -42,11 +42,11 @@ Two existing public skills were pulled down and inspected while scoping this rep
 Neither addresses CFDEM/DEM particle coupling — that's the actual gap this skill fills.
 Don't imitate the monolithic-dictionary-dump style; follow the progressive-disclosure style instead (see "Working in this repo" below).
 
-## CFDEM coupling content is internal, not public
+## CFDEM coupling documentation is local for now, not public
 
-CFDEMcoupling's own documentation is not public.
-Rule/guidance content specific to CFDEM (coupling dictionaries, particle-fluid coupling models, the `cfdemSolver*` family, etc.) must come from internal DCS material, not from web search or public scraping.
-Do not search online for CFDEM/CFDEMcoupling docs, and do not fabricate CFDEM-specific syntax or defaults from general CFD knowledge — verify against internal sources or ask.
+CFDEMcoupling's own documentation is not public yet, but it does exist: a static Sphinx-generated site bundled with the Aspherix installation at `$ASX_INSTALL/documentation/coupling/`.
+`references/CFDEM_DOC_SEARCH.md` documents how to search and read it — deliberately written the same way as Aspherix Assistant's public-docs search strategy (name-based page lookup, `objects.inv` as the index, section-scoped reads), so that when DCS publishes this documentation online, only the location and fetch mechanism (local file read vs. `WebFetch`) need to change, not the strategy itself.
+Do not search the public web for CFDEM/CFDEMcoupling docs — there's no public source to find yet — and do not fabricate CFDEM-specific syntax or defaults from general CFD knowledge; verify against the local docs or internal material, or ask.
 
 ## Commit messages
 
