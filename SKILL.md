@@ -55,6 +55,14 @@ Per-dictionary reference goes in `references/dictionaries/<name>.md`, one file p
 
 - `couplingProperties` reference: `references/dictionaries/couplingProperties.md` — the central coupling dictionary; read this first for any coupled case.
 
+## CFDEM Model Families
+
+Per-family reference goes in `references/models/<name>.md`, one file per model family worth documenting beyond the public docs — an overview of the base-class command and every available model, not a full page per individual model:
+
+- `forceModels` (and `forceSubModels`) reference: `references/models/forceModels.md`
+- `voidFractionModels` reference: `references/models/voidFractionModels.md`
+- `smoothingModels` reference: `references/models/smoothingModels.md`
+
 ## Strategies
 
 See `references/strategies/STRATEGIES.md`

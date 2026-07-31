@@ -26,6 +26,8 @@ Keep that division of responsibility — don't duplicate DEM-side rules here; li
 - `references/commands/<name>.md` — per-command guidance, one file per command worth documenting beyond the public docs.
 - `references/dictionaries/<name>.md` — per-dictionary reference for a CFDEM coupling dictionary (e.g. `couplingProperties`), one file per dictionary worth documenting beyond the public docs.
   Unlike `references/OPENFOAM.md`, these are *not* kept thin — CFDEM coupling content isn't in model training data, so a full, accurate reference genuinely earns its keep here. Source it from the public docs (see `references/CFDEM_DOC_SEARCH.md`), not from recall or fabrication.
+- `references/models/<name>.md` — per-model-family reference (e.g. `forceModels`, `voidFractionModels`, `smoothingModels`): the base-class command's syntax/description/restrictions plus a list of every available model in that family, not a full page per individual model.
+  Same sourcing rule as `references/dictionaries/`: from the public docs, not recall or fabrication. If an individual model needs more than a one-line mention (a non-obvious syntax quirk, a common pitfall), that's a signal it may deserve its own file rather than growing the family overview.
 - `references/strategies/STRATEGIES.md` — short, self-contained problem-solving strategies.
   A strategy that needs its own examples or multi-step walkthrough gets its own `references/strategies/<name>.md` file, linked from `STRATEGIES.md`.
 
