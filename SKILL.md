@@ -49,6 +49,11 @@ Per-command guidance goes in `references/commands/<name>.md`, one file per comma
 - `decomposePar` usage: `references/commands/decomposePar.md`
 - `reconstructPar` usage: `references/commands/reconstructPar.md`
 
+## Running a Coupled Simulation
+
+- `cfdemSimulate` usage (the standard way to launch a coupled CFDEM-Aspherix run): `references/commands/cfdemSimulate.md`
+- CFDEM environment variables and aliases (`CFDEM_PROJECT_DIR`, `cfdemSysTest`, etc.): `references/CFDEM_ENVIRONMENT.md` — check this before assuming a shell has the CFDEM environment loaded.
+
 ## CFDEM Coupling Dictionaries
 
 Per-dictionary reference goes in `references/dictionaries/<name>.md`, one file per CFDEM coupling dictionary worth documenting beyond the public docs:
