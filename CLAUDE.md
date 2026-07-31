@@ -25,7 +25,7 @@ Keep that division of responsibility — don't duplicate DEM-side rules here; li
   Deliberately thin: see "OpenFOAM content stays thin" below.
 - `references/commands/<name>.md` — per-command guidance, one file per command worth documenting beyond the public docs.
 - `references/dictionaries/<name>.md` — per-dictionary reference for a CFDEM coupling dictionary (e.g. `couplingProperties`), one file per dictionary worth documenting beyond the public docs.
-  Unlike `references/OPENFOAM.md`, these are *not* kept thin — CFDEM coupling content isn't in model training data, so a full, accurate reference genuinely earns its keep here. Source it from `references/CFDEM_DOC_SEARCH.md`'s local docs, not from recall or fabrication.
+  Unlike `references/OPENFOAM.md`, these are *not* kept thin — CFDEM coupling content isn't in model training data, so a full, accurate reference genuinely earns its keep here. Source it from the public docs (see `references/CFDEM_DOC_SEARCH.md`), not from recall or fabrication.
 - `references/strategies/STRATEGIES.md` — short, self-contained problem-solving strategies.
   A strategy that needs its own examples or multi-step walkthrough gets its own `references/strategies/<name>.md` file, linked from `STRATEGIES.md`.
 
@@ -44,11 +44,11 @@ Two existing public skills were pulled down and inspected while scoping this rep
 Neither addresses CFDEM/DEM particle coupling — that's the actual gap this skill fills.
 Don't imitate the monolithic-dictionary-dump style; follow the progressive-disclosure style instead (see "Working in this repo" below).
 
-## CFDEM coupling documentation is local for now, not public
+## CFDEM coupling documentation is public
 
-CFDEMcoupling's own documentation is not public yet, but it does exist: a static Sphinx-generated site bundled with the Aspherix installation at `$ASX_INSTALL/documentation/coupling/`.
-`references/CFDEM_DOC_SEARCH.md` documents how to search and read it — deliberately written the same way as Aspherix Assistant's public-docs search strategy (name-based page lookup, `objects.inv` as the index, section-scoped reads), so that when DCS publishes this documentation online, only the location and fetch mechanism (local file read vs. `WebFetch`) need to change, not the strategy itself.
-Do not search the public web for CFDEM/CFDEMcoupling docs — there's no public source to find yet — and do not fabricate CFDEM-specific syntax or defaults from general CFD knowledge; verify against the local docs or internal material, or ask.
+CFDEMcoupling's own documentation is public at `https://doc.aspherix-dem.com/coupling/` — a sibling section of the same Sphinx + Read the Docs site as the public Aspherix documentation (`main/`, `solver/`, `gui/`, `calibration/`, `coupling/`).
+`references/CFDEM_DOC_SEARCH.md` documents how to search and fetch it, written the same way as Aspherix Assistant's own `DOC_SEARCH.md` (name-based page lookup, `objects.inv` as the index, section-scoped reads) since it's the same site structure.
+Do not fabricate CFDEM-specific syntax or defaults from general CFD knowledge; verify against these docs instead.
 
 ## Commit messages
 

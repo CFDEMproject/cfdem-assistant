@@ -2,7 +2,7 @@
 
 The central CFDEM coupling dictionary: it configures the coupling routines between the CFD and DEM sides of a coupled simulation.
 Location: `$caseDir/CFD/constant/couplingProperties`.
-Source: local CFDEM coupling docs, `settings_coupling.html` — see `references/CFDEM_DOC_SEARCH.md` for how to look up the full page yourself.
+Source: [`settings_coupling.html`](https://doc.aspherix-dem.com/coupling/settings_coupling.html) — see `references/CFDEM_DOC_SEARCH.md` for how to look up the full page yourself.
 
 The dictionary is split into two parts.
 **Model selection & global settings** (documented here) picks which sub-models are active and sets a handful of case-wide values.

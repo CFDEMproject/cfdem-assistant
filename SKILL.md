@@ -61,5 +61,9 @@ See `references/strategies/STRATEGIES.md`
 
 ## CFDEM Coupling Documentation
 
-The CFDEM(R)/CFDEMcoupling documentation is not public yet, so use the local copy bundled with the Aspherix installation instead of searching the web for it.
-See `references/CFDEM_DOC_SEARCH.md` for how to find and read the right page — same search strategy as Aspherix Assistant's public docs, just against a local path for now.
+The public CFDEM(R)/CFDEMcoupling documentation, a sibling section of the same static Sphinx + Read the Docs site as the public Aspherix documentation.
+
+0. [website](https://doc.aspherix-dem.com/coupling/)
+1. [index](https://doc.aspherix-dem.com/coupling/genindex.html)
+
+See `references/CFDEM_DOC_SEARCH.md` for how to find and fetch the right page instead of searching or pulling whole pages into a scratch file.
