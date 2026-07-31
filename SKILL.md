@@ -49,6 +49,12 @@ Per-command guidance goes in `references/commands/<name>.md`, one file per comma
 - `decomposePar` usage: `references/commands/decomposePar.md`
 - `reconstructPar` usage: `references/commands/reconstructPar.md`
 
+## CFDEM Coupling Dictionaries
+
+Per-dictionary reference goes in `references/dictionaries/<name>.md`, one file per CFDEM coupling dictionary worth documenting beyond the public docs:
+
+- `couplingProperties` reference: `references/dictionaries/couplingProperties.md` — the central coupling dictionary; read this first for any coupled case.
+
 ## Strategies
 
 See `references/strategies/STRATEGIES.md`

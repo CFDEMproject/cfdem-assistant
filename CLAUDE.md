@@ -24,6 +24,8 @@ Keep that division of responsibility — don't duplicate DEM-side rules here; li
 - `references/OPENFOAM.md` — links to *official* OpenFOAM documentation, used to verify specifics rather than to teach OpenFOAM from scratch.
   Deliberately thin: see "OpenFOAM content stays thin" below.
 - `references/commands/<name>.md` — per-command guidance, one file per command worth documenting beyond the public docs.
+- `references/dictionaries/<name>.md` — per-dictionary reference for a CFDEM coupling dictionary (e.g. `couplingProperties`), one file per dictionary worth documenting beyond the public docs.
+  Unlike `references/OPENFOAM.md`, these are *not* kept thin — CFDEM coupling content isn't in model training data, so a full, accurate reference genuinely earns its keep here. Source it from `references/CFDEM_DOC_SEARCH.md`'s local docs, not from recall or fabrication.
 - `references/strategies/STRATEGIES.md` — short, self-contained problem-solving strategies.
   A strategy that needs its own examples or multi-step walkthrough gets its own `references/strategies/<name>.md` file, linked from `STRATEGIES.md`.
 
