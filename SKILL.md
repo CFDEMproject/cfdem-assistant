@@ -79,4 +79,4 @@ The public CFDEM(R)/CFDEMcoupling documentation, a sibling section of the same s
 0. [website](https://doc.aspherix-dem.com/coupling/)
 1. [index](https://doc.aspherix-dem.com/coupling/genindex.html)
 
-See `references/CFDEM_DOC_SEARCH.md` for how to find and fetch the right page instead of searching or pulling whole pages into a scratch file.
+See `references/CFDEM_DOC_SEARCH.md` for how to find and fetch the right page instead of searching or pulling whole pages into a scratch file — including the 3-strategy escalation for fetching a page section (fetch-tool prompt → subagent-run `scripts/fetch_section.py` → running that script yourself) when a fetch tool's own summarization drops or paraphrases dense reference content.
