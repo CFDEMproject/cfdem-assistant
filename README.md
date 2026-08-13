@@ -21,6 +21,7 @@ See [`INSTALLATION.md`](INSTALLATION.md) for exact per-tool install paths and me
 - `references/dictionaries/<name>.md` — per-dictionary reference for a CFDEM coupling dictionary (e.g. `couplingProperties`), one file per dictionary.
 - `references/models/<name>.md` — per-model-family reference (e.g. `forceModels`, `voidFractionModels`, `smoothingModels`).
 - `references/strategies/STRATEGIES.md` — short problem-solving strategies for building and debugging coupled cases; larger ones get their own `references/strategies/<name>.md` file.
+- `scripts/doc_index.py` — fetches and decompresses the docs site's `objects.inv`, optionally filtered by keyword; used by `CFDEM_DOC_SEARCH.md`.
 
 See `CLAUDE.md` for the conventions used when extending this repo.
 

@@ -13,11 +13,11 @@ If you already know the entity name, construct this URL directly instead of sear
 ## Using the object inventory
 
 If the exact entity name isn't known, use `objects.inv` — the site's Sphinx object inventory — as the authoritative index of every documented page, rather than crawling `genindex.html` or pulling whole pages into a scratch file to find the right one.
-It's a zlib-compressed binary file, not HTML, so a URL-fetching tool that expects renderable content (e.g. Claude Code's WebFetch) can't parse it directly; fetch and decompress it with a shell command instead:
+It's a zlib-compressed binary file, not HTML, so a URL-fetching tool that expects renderable content (e.g. Claude Code's WebFetch) can't parse it directly; use `scripts/doc_index.py` (in this skill's own repo) to fetch and decompress it instead of reaching for inline `curl`/`python3 -c`:
 
 ```
-curl -s https://doc.aspherix-dem.com/coupling/objects.inv -o /tmp/objects.inv
-python3 -c "import zlib; d=open('/tmp/objects.inv','rb').read(); print(zlib.decompress(d.split(b'\n',4)[4]).decode())"
+scripts/doc_index.py                # full inventory
+scripts/doc_index.py forceModel     # only entries whose name/displayname contains "forceModel"
 ```
 
 Each line is `name domain:role priority uri displayname`.
