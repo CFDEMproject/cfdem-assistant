@@ -9,13 +9,18 @@ Usage:
 Otherwise, prints the exact text of each requested section, in document order,
 under a "=== <id> ===" header. No model is involved: this is a plain HTML->text
 extraction, meant as a deterministic alternative to a lossy WebFetch-style summary.
+Code/config blocks (Sphinx "highlight" <pre> blocks — the actual dictionary
+syntax) are wrapped in ``` fences so they're visibly distinct from surrounding
+prose.
 """
 import sys
 import urllib.request
 from html.parser import HTMLParser
 
-BLOCK_TAGS = {"p", "li", "dt", "dd", "h1", "h2", "h3", "h4", "h5", "h6", "pre", "tr"}
+BLOCK_TAGS = {"p", "li", "dt", "dd", "h1", "h2", "h3", "h4", "h5", "h6", "tr"}
 SKIP_ANCHOR_CLASSES = {"headerlink", "toc-backref"}
+CODE_START = "\x00CODE_START\x00"
+CODE_END = "\x00CODE_END\x00"
 
 
 class SectionExtractor(HTMLParser):
@@ -26,6 +31,7 @@ class SectionExtractor(HTMLParser):
         self.captured = {}  # id -> list of text chunks
         self.capture_depth = None  # section_stack depth at which capture started
         self.skip_anchor_depth = None  # tag-stack depth of an anchor we're skipping text for
+        self.pre_depth = None  # tag-stack depth of a <pre> code block we're inside
         self.tag_depth = 0
 
     def handle_starttag(self, tag, attrs):
@@ -45,7 +51,10 @@ class SectionExtractor(HTMLParser):
             if classes & SKIP_ANCHOR_CLASSES:
                 self.skip_anchor_depth = self.tag_depth
 
-        if self.capture_depth is not None and tag in BLOCK_TAGS:
+        if tag == "pre" and self.capture_depth is not None and self.pre_depth is None:
+            self.pre_depth = self.tag_depth
+            self._emit(CODE_START)
+        elif self.capture_depth is not None and self.pre_depth is None and tag in BLOCK_TAGS:
             self._emit("\n")
 
     def handle_endtag(self, tag):
@@ -53,6 +62,9 @@ class SectionExtractor(HTMLParser):
             self.section_stack.pop()
             if self.capture_depth is not None and len(self.section_stack) < self.capture_depth:
                 self.capture_depth = None
+        if self.pre_depth is not None and self.tag_depth == self.pre_depth:
+            self._emit(CODE_END)
+            self.pre_depth = None
         if self.skip_anchor_depth is not None and self.tag_depth == self.skip_anchor_depth:
             self.skip_anchor_depth = None
         self.tag_depth -= 1
@@ -77,6 +89,18 @@ def fetch_html(url):
 
 def render(chunks):
     text = "".join(chunks)
+    pieces = []
+    for i, part in enumerate(text.split(CODE_START)):
+        if i == 0:
+            pieces.append(_render_prose(part))
+            continue
+        code, _, rest = part.partition(CODE_END)
+        pieces.append("```\n" + code.strip("\n") + "\n```")
+        pieces.append(_render_prose(rest))
+    return "\n".join(p for p in pieces if p)
+
+
+def _render_prose(text):
     lines = [line.strip() for line in text.splitlines()]
     lines = [line for line in lines if line]
     return "\n".join(lines)
