@@ -23,6 +23,7 @@ Keep that division of responsibility — don't duplicate DEM-side rules here; li
   The rule text itself must live only in `references/RULES.md` — don't fork rule content into multiple places.
 - `references/OPENFOAM.md` — links to *official* OpenFOAM documentation, used to verify specifics rather than to teach OpenFOAM from scratch.
   Deliberately thin: see "OpenFOAM content stays thin" below.
+- `references/SOLVERS.md` — the available `cfdemSolver*` binaries: what each is for and which model families/particle shapes it supports. Same sourcing rule as `references/dictionaries/` below — from the public docs, not recall or fabrication.
 - `references/commands/<name>.md` — per-command guidance, one file per command worth documenting beyond the public docs. Covers both OpenFOAM utilities (`checkMesh`, `foamDictionary`, …) and CFDEM's own utilities (`cfdemSimulate`, …).
 - `references/CFDEM_ENVIRONMENT.md` — the CFDEM environment: variables (`CFDEM_PROJECT_DIR`, …) and aliases (`cfdemSysTest`, `cfdemRun`, …) set up by sourcing the CFDEMcoupling `bashrc`. Same sourcing rule as the dictionary/model references below — from the public docs, not recall.
 - `references/dictionaries/<name>.md` — per-dictionary reference for a CFDEM coupling dictionary (e.g. `couplingProperties`), one file per dictionary worth documenting beyond the public docs.

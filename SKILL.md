@@ -49,6 +49,10 @@ Per-command guidance goes in `references/commands/<name>.md`, one file per comma
 - `decomposePar` usage: `references/commands/decomposePar.md`
 - `reconstructPar` usage: `references/commands/reconstructPar.md`
 
+## CFDEM Solvers
+
+See `references/SOLVERS.md` for the available `cfdemSolver*` binaries, which physics each is for, and which model families are gated behind IB/VoF/scalar-transport support — pick the right solver before configuring `couplingProperties`.
+
 ## Running a Coupled Simulation
 
 - `cfdemSimulate` usage (the standard way to launch a coupled CFDEM-Aspherix run): `references/commands/cfdemSimulate.md`

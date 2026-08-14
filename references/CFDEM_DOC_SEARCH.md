@@ -34,7 +34,9 @@ For a syntax/keys question, ask for `Syntax`; for "how does this model work" que
 
 Once you've resolved the exact page and section name (above), escalate through these three strategies in order — stop at the first one that gives you a complete, accurate answer.
 
-A page listed in `List_<family>.html` or `objects.inv` that 404s when fetched is not a dead link — it means that entity is withheld from this licence/distribution (some models are gated). Don't spend a fetch-strategy escalation trying to recover a page that 404s this way; note the gap and, if the model is actually needed, fall back to the CFDEMcoupling source tree (`src/lagrangian/cfdemParticle/subModels/<family>/`) instead.
+A page listed in `List_<family>.html` or `objects.inv` that "404s" is not a dead link — it means that entity is withheld from this licence/distribution (some models and solvers are gated).
+This is a *soft* 404: the request returns HTTP 200, with a page body reading "*The page you requested cannot be found. Most likely this is because the particular feature is not enabled by your license.*" — checking the HTTP status code alone won't catch it; `scripts/fetch_section.py <url> --list` on such a page returns a single `not-found` section id, which is the reliable way to detect it.
+Don't spend a fetch-strategy escalation trying to recover a page that 404s this way; note the gap and, if the model is actually needed, fall back to the CFDEMcoupling source tree (`src/lagrangian/cfdemParticle/subModels/<family>/`) instead.
 
 ### Strategy 1: a fetch tool, with a verbatim-constrained prompt
 

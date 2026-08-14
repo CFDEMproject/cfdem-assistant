@@ -15,6 +15,7 @@ See [`INSTALLATION.md`](INSTALLATION.md) for exact per-tool install paths and me
 - `SKILL.md` — the skill definition: context, links to the public CFDEM coupling [docs](https://doc.aspherix-dem.com/coupling/), and pointers into `references/`.
 - `references/RULES.md` — the single source of truth for rules every CFDEM-coupled case must follow.
 - `references/OPENFOAM.md` — a short, deliberately thin list of links to official OpenFOAM 10 documentation.
+- `references/SOLVERS.md` — the available `cfdemSolver*` binaries, what each is for, and which are gated behind licensing.
 - `references/CFDEM_DOC_SEARCH.md` — how to search and fetch the right page from the public CFDEM coupling documentation.
 - `references/CFDEM_ENVIRONMENT.md` — loading the CFDEM environment (`bashrc`/`zshrc`), and its environment variables and aliases.
 - `references/commands/<name>.md` — per-command guidance (styles, syntax, examples, preferred usage) for OpenFOAM utilities (`checkMesh`, `foamDictionary`, …) and CFDEM's own utilities (`cfdemSimulate`, …), one file per command.
