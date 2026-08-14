@@ -34,6 +34,8 @@ For a syntax/keys question, ask for `Syntax`; for "how does this model work" que
 
 Once you've resolved the exact page and section name (above), escalate through these three strategies in order — stop at the first one that gives you a complete, accurate answer.
 
+A page listed in `List_<family>.html` or `objects.inv` that 404s when fetched is not a dead link — it means that entity is withheld from this licence/distribution (some models are gated). Don't spend a fetch-strategy escalation trying to recover a page that 404s this way; note the gap and, if the model is actually needed, fall back to the CFDEMcoupling source tree (`src/lagrangian/cfdemParticle/subModels/<family>/`) instead.
+
 ### Strategy 1: a fetch tool, with a verbatim-constrained prompt
 
 Most coding-agent harnesses (Claude Code's WebFetch, Gemini CLI's web_fetch, etc.) fetch a URL through a small model that only sees the URL and the prompt you give it — it can't browse or search the site itself, starts with no context on CFDEM coupling or this skill, and, being small, tends to summarize or paraphrase dense reference content (a `couplingProperties`-style settings list, a `List_<family>.html` model enumeration) rather than reproducing it exactly.
