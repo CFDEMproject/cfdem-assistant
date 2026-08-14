@@ -7,10 +7,10 @@ Prefer this over `Read`/`Edit` on a dictionary when you only need to check or ch
 
 ```
 foamDictionary system/controlDict -entry endTime -value
-foamDictionary 0/U -entry boundaryField.inlet.type -value
+foamDictionary 0/U -entry boundaryField/inlet/type -value
 ```
 
-`-entry` selects an entry by dotted path through nested sub-dicts.
+`-entry` selects an entry by **slash**-separated path through nested sub-dicts (verified against an OpenFOAM 10 install — `foamDictionary -help`'s own examples agree). A dot-separated path (`boundaryField.inlet.type`) is a different tool's convention and fails here with `Cannot find entry` — don't use it for this command.
 `-value` prints only the value, not the `key value;` pair — use this when the result feeds into a script or a decision, not when showing the user the full entry.
 
 ## Listing structure
@@ -26,7 +26,7 @@ foamDictionary system/fvSolution -entry solvers -keywords
 
 ```
 foamDictionary system/controlDict -entry writeInterval -set 50
-foamDictionary 0/U -entry "boundaryField.inlet.value" -set "uniform (2 0 0)"
+foamDictionary 0/U -entry "boundaryField/inlet/value" -set "uniform (2 0 0)"
 ```
 
 `-set` overwrites an existing entry in place; `-add` creates a new one if it doesn't exist yet.
@@ -45,5 +45,6 @@ Use this when a dictionary references another file (common in `system/fvSchemes`
 ## Gotchas
 
 - Run it from the case directory, or pass the dictionary's full/relative path — there's no implicit case-root discovery.
+- Nested-entry paths are `/`-separated (`boundaryField/inlet/type`), not `.`-separated — a dot-separated path fails with `Cannot find entry` even though the entry exists.
 - Regex-keyed sub-dicts (e.g. `"(p|U)"` in `fvSolution`) must be quoted exactly as they appear in the file when addressed via `-entry`.
 - It operates on field files (`0/U`, `0/p`, …) the same way it does on `system`/`constant` dictionaries — the `boundaryField` sub-dict is just another nested entry.
