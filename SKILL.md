@@ -72,6 +72,7 @@ Per-family reference goes in `references/models/<name>.md`, one file per model f
 - `voidFractionModels` reference: `references/models/voidFractionModels.md`
 - `locateModels` reference: `references/models/locateModels.md`
 - `smoothingModels` reference: `references/models/smoothingModels.md`
+- `postProcessingModels` reference: `references/models/postProcessingModels.md`
 
 ## Strategies
 

@@ -21,6 +21,10 @@ It's the base class for every model representing a DEM particle's volume in the 
 Check `List_voidFractionModels.html` (via `references/CFDEM_DOC_SEARCH.md`) for the current authoritative list before picking one — this list can drift from the live docs over time.
 The `IB*` variants pair with an immersed-boundary-style `locateModel`; the `divided*` variants distribute a particle's volume across the cells it overlaps rather than assigning it entirely to one cell — relevant when particles are comparable in size to, or larger than, the local cell size.
 
+## Mesh sizing for coarse-grained particles
+
+`alphaMin` floor-clamping applies across most void-fraction models — see the base [`voidfractionModel.html`](https://doc.aspherix-dem.com/coupling/voidfractionModel.html) page before sizing a mesh for a coarse-grained case.
+
 ## `useDDTvoidfraction` masking
 
 `couplingProperties`' `useDDTvoidfraction` setting (see `references/dictionaries/couplingProperties.md`) enables the time-derivative-of-voidfraction term.
