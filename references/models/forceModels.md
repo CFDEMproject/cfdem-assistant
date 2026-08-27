@@ -61,7 +61,7 @@ Availability depends on the specific `forceModel`; defaults are generally `false
 
 - `treatForceExplicit` — if `false` (default), the coupling force is treated semi-implicitly (drag coefficient × relative velocity between average particle velocity and local fluid velocity) — generally more stable. If `true`, the force is applied directly (explicit).
 - `treatForceDEM` — if `false`, forces are calculated for both DEM and CFD; restrict to DEM-only with `true`.
-- `implForceDEM` — if `true`, fluid velocity and drag coefficient are sent to the DEM side each coupling step and the drag force is computed there using the particle velocity (generally more stable, since drag decreases as the particle approaches the fluid velocity). If `false`, the CFD-computed drag force is used directly and held constant for one coupling interval.
+- `implForceDEM` — if `true`, fluid velocity and drag coefficient are sent to the DEM side each coupling step and the drag force is computed there using the particle velocity (generally more stable, since drag decreases as the particle approaches the fluid velocity). If `false`, the CFD-computed drag force is used directly and held constant for one coupling interval. Support isn't guaranteed identical across `particleShapeType`s — verify it actually affects the result for the shape in use before trusting it, especially the first time it's combined with a given shape.
 - `verbose` — print verbose output to screen.
 - `interpolation` — if `true`, interpolate Eulerian field values to the particle position for the Lagrangian calculation; if `false` (default), use the cell-centre value.
 - `useFilteredDragModel` — use a coarse-grid version of the Beetstra drag model that accounts for grid-size effects.
