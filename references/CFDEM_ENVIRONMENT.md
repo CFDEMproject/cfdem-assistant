@@ -67,7 +67,7 @@ Set internally by the CFDEM environment for convenient access to scripts/templat
 
 - `CFDEM_ETC_DIR` — the `etc` dir containing the `bashrc`, compile scripts, etc.
 - `CFDEM_SCRIPT_DIR` — directory of extra scripts, automatically added to `PATH`.
-- `CFDEM_DEFAULT_DIR` — directory of defaults for `controlDict` and other settings.
+- `CFDEM_DEFAULT_DIR` — directory of shared default dictionaries, meant to be `#include`d into a case's own dictionary rather than hand-copied. Notable files: `controlDefaults` (common `controlDict` entries), `probeDefaults` (common settings for a `probes` function object), `volFieldValueDefaults` (common settings for a `volFieldValue` function object). The latter two use older OpenFOAM function-object keys (`functionObjectLibs` instead of `libs`; `volFieldValueDefaults` also uses `source` instead of `regionType`) — these still work on OpenFOAM 10 (`functionObjectLibs` is a supported legacy alias, and an absent `regionType` simply defaults to the whole domain), so don't "modernize" them when including this file.
 - `CFDEM_SCHEME_PATH` — directory of CFDEMcoupling's default `fvSchemes`/`fvSolution` schemes.
 
 ## Available aliases
