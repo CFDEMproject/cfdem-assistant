@@ -72,6 +72,12 @@ Discontinuities at the fluid-fluid interface (e.g. in the pressure field) make i
 - `noParticlesAtInterface` — switch (default `false`). Forces the user to explicitly confirm particles are not close to the liquid-gas interface, required whenever pressure gradients are used (via the `gradPForce` force model) or any force model interpolates fluid fields to particle positions.
 - `phaseChange` — switch. Default: `true` if a temperature field `T` exists in the start-time directory, `false` otherwise. Controls whether phase change / the temperature field is solved for; can be overridden manually (see `cfdemSolverInter`).
 
+## Settings for Euler-Euler solvers
+
+Applies to `cfdemSolverMultiPhaseEuler` (see `references/SOLVERS.md`).
+
+- `primaryPhaseName` — name of the phase (from `phaseProperties`) whose `U`/`T`/turbulence fields are used for DEM coupling. Default: `"liquid"`. Must be set explicitly whenever no phase in `phaseProperties` is actually named `liquid` (e.g. a `water`/`oil`/`mercury`/`air` phase set) — the coupling machinery otherwise looks for fields under the default name and won't find them.
+
 ## IB settings
 
 Relevant when using an IB-style locate model (e.g. `engineIB`), where periodic boundaries need to be declared explicitly in `couplingProperties` — especially if particles cross that periodic boundary.
