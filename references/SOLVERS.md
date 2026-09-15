@@ -48,7 +48,7 @@ Supports an arbitrary number of fluid phases, inherited from OpenFOAM's generic 
 - The solver adds `div(alphaRhoPhi*interpolate(voidfraction), <field>)` terms to the momentum and energy equations that don't exist in stock `multiphaseEulerFoam`. When adapting an `fvSchemes` from a plain `multiphaseEulerFoam` tutorial for this solver, add matching `divSchemes` entries for `U`, `p`/`thermo:rho`, and `K`/`e`, e.g.:
   ```
   "div\(\(alphaRhoPhi.*\*interpolate\(voidfraction\)\),U.*\)"     Gauss limitedLinearV 1;
-  "div\(\(alphaRhoPhi.*\*interpolate\(voidfraction\)\),\(p\|thermo:rho.*\)\)"  Gauss limitedLinear 1;
+  "div\(\(alphaRhoPhi.*\*interpolate\(voidfraction\)\),(p|thermo:rho.*)\)"  Gauss limitedLinear 1;
   "div\(\(alphaRhoPhi.*\*interpolate\(voidfraction\)\),(K|e).*\)" Gauss limitedLinear 1;
   ```
 
