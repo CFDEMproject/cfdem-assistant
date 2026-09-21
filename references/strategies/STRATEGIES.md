@@ -30,3 +30,23 @@ Full quantitative validation against a reference still needs an actual complete 
 
 In a dam-break-style setup, the interface takes on the order of `sqrt(h/g)` to move meaningfully (e.g. roughly 0.2-0.3s for OpenFOAM's classic damBreak geometry with a ~0.29m water column) — a probe placed where the front eventually arrives reads flat/near-zero noise until then.
 For a quick regression check, prefer a domain-wide integrated quantity (e.g. a `volFieldValue` with `operation volIntegrate` on each phase's `alpha`) over a single point probe: it's sensitive to solver differences immediately, without needing the flow to physically travel anywhere.
+
+## Build a coupled case in complexity stages, not all at once
+
+Validate the simplest physics first (e.g. isothermal/momentum-only), then add the next layer (heat transfer, phase change, ...) only once that's confirmed stable — each stage is far cheaper to debug in isolation. Gate later stages behind a script variable so the same case can still run at an earlier stage for regression checking.
+
+## Build O-grid blockMeshDicts with classy_blocks instead of hand-rolled vertex/block math
+
+For a cylindrical CFD domain, use the `classy_blocks` Python library rather than deriving block/vertex/edge geometry by hand — see `references/strategies/CLASSY_BLOCKS.md`.
+
+## A DEM/CFD gravity mismatch only prints a warning, not an error
+
+DEM and CFD gravity settings (`Section_settings.html`) can silently diverge — a mismatch only shows up as a `Warning` in the log, never a fatal error.
+
+## Use a `smoothingModel` once particles are large compared to the local cell size
+
+See `references/models/smoothingModels.md`.
+
+## Track the actual launch's PIDs before trusting a coupled run has ended
+
+Per `cfdemSimulate.html`'s note on DEM/CFD process independence: check both the `aspherix` and CFD-solver PIDs from the specific launch before reusing a case's output directories.
