@@ -7,6 +7,12 @@ A strategy that needs its own examples or multi-step walkthrough gets its own `r
 
 A coupled run has three independent timescales — DEM step, CFD step, coupling interval — and instability can come from any one, or their interaction. Stage the diagnosis: pure DEM, then coupled with force scaled near zero, then a small nonzero scale, then full strength — one variable at a time. `checkCouplingInterval` (`references/models/postProcessingModels.md`, made visible with `silent false`) can shortcut this.
 
+## Tighten the pressure tolerance when continuity drifts and the pressure solve does no work
+
+If `time step continuity errors` keep growing and `p`/`p_rgh` repeatedly logs `No Iterations 0`, the pressure isn't actually being solved — expect single-step Courant spikes (and unbounded `alpha` in VoF), which a smaller time step only postpones.
+Tighten `tolerance`/`relTol` for `"(p|pcorr|p_rgh)"` and its `Final` entry in the case's `fvSolution` (e.g. CFDEM default `1e-6`/`0.1` → `1e-9`/`0.01`); `minIter 1` alone is not enough.
+Once the pressure converges, a much larger time step is often stable again.
+
 ## Size CFD cells for coarse-grained particles by local packing density, not single-particle fit
 
 Several particles can land in one cell even when each individually fits, silently clipping a void-fraction model's solids floor (`references/models/voidFractionModels.md`). Confirm with the model's own diagnostic after sizing a mesh, not just by checking the run completes.
