@@ -35,9 +35,9 @@ For a quick regression check, prefer a domain-wide integrated quantity (e.g. a `
 
 Validate the simplest physics first (e.g. isothermal/momentum-only), then add the next layer (heat transfer, phase change, ...) only once that's confirmed stable — each stage is far cheaper to debug in isolation. Gate later stages behind a script variable so the same case can still run at an earlier stage for regression checking.
 
-## Build O-grid blockMeshDicts with classy_blocks instead of hand-rolled vertex/block math
+## Prefer classy_blocks for generating block meshes for CFD domains more complex than a single block
 
-For a cylindrical CFD domain, use the `classy_blocks` Python library rather than deriving block/vertex/edge geometry by hand — see `references/strategies/CLASSY_BLOCKS.md`.
+For a domain with geometry beyond a single-block mesh (e.g. cylindrical), prefer the `classy_blocks` Python library over deriving block/vertex/edge geometry by hand, when it's available and applicable to the case — see `references/strategies/CLASSY_BLOCKS.md`.
 
 ## A DEM/CFD gravity mismatch only prints a warning, not an error
 
