@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
-"""Fetch a CFDEM coupling docs page and extract one or more <section id="..."> blocks verbatim.
+"""Read a CFDEM coupling docs page and extract one or more <section id="..."> blocks verbatim.
 
 Usage:
-    scripts/fetch_section.py <url> --list
-    scripts/fetch_section.py <url> <section-id> [<section-id> ...]
+    scripts/fetch_section.py [--docs online|<path>] <url> --list
+    scripts/fetch_section.py [--docs online|<path>] <url> <section-id> [<section-id> ...]
+
+<url> is a https://doc.aspherix-dem.com/coupling/<page>.html URL (or just coupling/<page>.html).
+The page is read from the documentation of the installed Aspherix (found via the `aspherix` binary);
+--docs online|<path> chooses another source; exit code 3 means the source could not be resolved
+(the agent then asks the user). See doc_source.py.
 
 --list prints every section id on the page, without extracting content.
 Otherwise, prints the exact text of each requested section, in document order,
@@ -14,8 +19,9 @@ syntax) are wrapped in ``` fences so they're visibly distinct from surrounding
 prose.
 """
 import sys
-import urllib.request
 from html.parser import HTMLParser
+
+from doc_source import ONLINE, read, split_docs_arg
 
 BLOCK_TAGS = {"p", "li", "dt", "dd", "h1", "h2", "h3", "h4", "h5", "h6", "tr"}
 SKIP_ANCHOR_CLASSES = {"headerlink", "toc-backref"}
@@ -82,9 +88,15 @@ class SectionExtractor(HTMLParser):
             self.captured[section_id] = []
 
 
-def fetch_html(url):
-    with urllib.request.urlopen(url) as resp:
-        return resp.read().decode("utf-8", errors="replace")
+def fetch_html(url, choice=None):
+    rel = url[len(ONLINE):] if url.startswith(ONLINE) else url.lstrip("/")
+    product, _, page = rel.partition("/")
+    try:
+        html, _ = read(product, page.split("#")[0], choice)
+    except OSError as e:  # missing local file, or urllib.error.HTTPError/URLError
+        sys.exit(f"page not found: {product}/{page}: {e}\n(it may be newer than the installed version, "
+                 "or not enabled by the licence)")
+    return html
 
 
 def render(chunks):
@@ -107,13 +119,14 @@ def _render_prose(text):
 
 
 def main():
-    if len(sys.argv) < 3:
+    choice, argv = split_docs_arg(sys.argv[1:])
+    if len(argv) < 2:
         print(__doc__, file=sys.stderr)
         sys.exit(1)
 
-    url = sys.argv[1]
-    args = sys.argv[2:]
-    html = fetch_html(url)
+    url = argv[0]
+    args = argv[1:]
+    html = fetch_html(url, choice)
 
     if args == ["--list"]:
         parser = SectionExtractor()
