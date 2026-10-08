@@ -32,6 +32,10 @@ decomposePar -force
 
 `-force` deletes any existing `processorN/` directories and redecomposes from scratch — use this when you've changed `numberOfSubdomains` or the mesh since the last decomposition, otherwise `decomposePar` will refuse to overwrite stale processor directories.
 
+## Changing the number of ranks of an existing run
+
+Run `reconstructPar -time T` while `numberOfSubdomains` still equals the number of `processorN/` directories (a larger value fails with a misleading `Cannot find file "points"`), then set the new value and run `decomposePar -time T -force`.
+
 ## Decomposing existing time results, not just the initial condition
 
 ```
