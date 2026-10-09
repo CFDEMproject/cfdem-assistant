@@ -32,9 +32,13 @@ decomposePar -force
 
 `-force` deletes any existing `processorN/` directories and redecomposes from scratch — use this when you've changed `numberOfSubdomains` or the mesh since the last decomposition, otherwise `decomposePar` will refuse to overwrite stale processor directories.
 
+This includes every computed time directory inside them: reconstruct the times you still need first, and never use `-force` on a run you want to continue as it is (restart, resubmit of a job script).
+
 ## Changing the number of ranks of an existing run
 
-Run `reconstructPar -time T` while `numberOfSubdomains` still equals the number of `processorN/` directories (a larger value fails with a misleading `Cannot find file "points"`), then set the new value and run `decomposePar -time T -force`.
+For a case with a static mesh: run `reconstructPar -time T` while `numberOfSubdomains` still equals the number of `processorN/` directories, then set the new value and run `decomposePar -time T -force`.
+`reconstructPar` reads `numberOfSubdomains` from `decomposeParDict` to find the `processorN/` directories: a larger value fails with a misleading `Cannot find file "points"`, a smaller one crashes with a segmentation fault.
+For a dynamic mesh, run `reconstructParMesh` before `reconstructPar` (OpenFOAM 10).
 
 ## Decomposing existing time results, not just the initial condition
 
