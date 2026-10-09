@@ -56,3 +56,8 @@ See `references/models/smoothingModels.md`.
 ## Track the actual launch's PIDs before trusting a coupled run has ended
 
 Per `cfdemSimulate.html`'s note on DEM/CFD process independence: check both the `aspherix` and CFD-solver PIDs from the specific launch before reusing a case's output directories.
+
+## Continue a stopped coupled run from a restart
+
+Follow the restart entry of the CFDEMcoupling how-to (`https://doc.aspherix-dem.com/coupling/Section_how_to.html`).
+Also check the case's run script for steps that would remove the results or undo the restart: `decomposePar` (`-force` deletes the computed times), `rm` on `processor*` or time directories, `cfdemCleanCase`, or any other cleanup before `cfdemSimulate`.
