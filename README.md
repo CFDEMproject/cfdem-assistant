@@ -22,8 +22,9 @@ See [`INSTALLATION.md`](INSTALLATION.md) for exact per-tool install paths and me
 - `references/dictionaries/<name>.md` — per-dictionary reference for a CFDEM coupling dictionary (e.g. `couplingProperties`), one file per dictionary.
 - `references/models/<name>.md` — per-model-family reference (e.g. `forceModels`, `voidFractionModels`, `smoothingModels`).
 - `references/strategies/STRATEGIES.md` — short problem-solving strategies for building and debugging coupled cases; larger ones get their own `references/strategies/<name>.md` file.
-- `scripts/doc_index.py` — fetches and decompresses the docs site's `objects.inv`, optionally filtered by keyword; used by `CFDEM_DOC_SEARCH.md`.
-- `scripts/fetch_section.py` — fetches a docs page and extracts one or more `<section id="...">` blocks verbatim, no model involved; used by `CFDEM_DOC_SEARCH.md`.
+- `scripts/doc_source.py` — resolves the docs source: the documentation of the installed Aspherix (via the `aspherix` binary) by default, `--docs online|<path>` or `$ASPHERIX_DOC_BASE` to override, exit code 3 when it can't be resolved. Shared by the two scripts below; keep in sync with Aspherix Assistant's copy.
+- `scripts/doc_index.py` — reads and decompresses the docs' `objects.inv`, optionally filtered by keyword; used by `CFDEM_DOC_SEARCH.md`.
+- `scripts/fetch_section.py` — reads a docs page and extracts one or more `<section id="...">` blocks verbatim, no model involved; used by `CFDEM_DOC_SEARCH.md`.
 
 See `CLAUDE.md` for the conventions used when extending this repo.
 

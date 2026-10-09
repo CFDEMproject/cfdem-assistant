@@ -3,6 +3,24 @@
 The CFDEM(R)/CFDEMcoupling documentation ([website](https://doc.aspherix-dem.com/coupling/), [index](https://doc.aspherix-dem.com/coupling/genindex.html)) is a static Sphinx + Read the Docs site, the same as the public Aspherix documentation — it's a sibling section of the same site (`coupling/` alongside `main/`, `solver/`, `gui/`, `calibration/`).
 The search strategy below mirrors Aspherix Assistant's own `DOC_SEARCH.md` exactly; only the base path differs.
 
+## Which documentation to read
+
+By default the scripts read the documentation of the **installed Aspherix**: `<install>/documentation/<product>/`, found relative to the `aspherix` binary on `PATH`. It matches the installed version; the website always shows the latest release.
+`scripts/doc_index.py` and `scripts/fetch_section.py` say which source they use on stderr (`# Using ...`); mention it to the user when it matters.
+`fetch_section.py` takes the website URL (or `<product>/<page>.html`) and maps it to the source in use.
+
+An explicit choice overrides that default: `--docs online` (the website) or `--docs <path>` (a local documentation directory containing `<product>/`, e.g. a developer build) on either script, or the same value in `$ASPHERIX_DOC_BASE` for a persistent choice (not set by the installer).
+A source named by the user or in the project's `CLAUDE.md` counts as explicit: pass it with `--docs` on every call (shell state doesn't persist between calls).
+
+If there is no explicit choice and no `aspherix` binary (or no documentation next to it), the scripts print `DOCS_SOURCE_UNRESOLVED` and exit with code 3, without guessing. They can't prompt, so **ask the user** (e.g. with `AskUserQuestion`) whether to use
+- the **online docs**, pointing out that they show the latest release, so the version, or features enabled by the licence, may differ from the user's Aspherix; or
+- a **local documentation directory** (relevant for developers),
+
+then re-run with `--docs`. Remember the answer for the rest of the conversation.
+With online docs, tell the user when it matters, and check version-sensitive details against `aspherix -h`, the actual error message or the example cases.
+A fetch tool (WebFetch etc.) only reaches the website, so for version-exact answers skip "Strategy 1" below and use the scripts.
+A page missing from the installed docs is reported as not found: it may be newer than the install, or not enabled by the licence. The scripts don't fall back to the website on their own.
+
 ## Finding the right page
 
 Pages are named after the entity they document: `https://doc.aspherix-dem.com/coupling/<entityName>.html`.
@@ -13,7 +31,7 @@ If you already know the entity name, construct this URL directly instead of sear
 ## Using the object inventory
 
 If the exact entity name isn't known, use `objects.inv` — the site's Sphinx object inventory — as the authoritative index of every documented page, rather than crawling `genindex.html` or pulling whole pages into a scratch file to find the right one.
-It's a zlib-compressed binary file, not HTML, so a URL-fetching tool that expects renderable content (e.g. Claude Code's WebFetch) can't parse it directly; use `scripts/doc_index.py` (in this skill's own repo) to fetch and decompress it instead of reaching for inline `curl`/`python3 -c`:
+It's a zlib-compressed binary file, not HTML, so a URL-fetching tool that expects renderable content (e.g. Claude Code's WebFetch) can't parse it directly; use `scripts/doc_index.py` (in this skill's own repo) to read and decompress it instead of reaching for inline `curl`/`python3 -c`:
 
 ```
 scripts/doc_index.py                # full inventory

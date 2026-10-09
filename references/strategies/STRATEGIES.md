@@ -57,3 +57,8 @@ See `references/models/smoothingModels.md`.
 
 DEM and CFD are separate OS processes: when one side aborts, the other does not necessarily terminate (in either direction).
 Check both the `aspherix` and CFD-solver PIDs from the specific launch (e.g. `pgrep -a aspherix`, `pgrep -a cfdemSolver`) before restarting or reusing a case's output directories.
+
+## Continue a stopped coupled run from a restart
+
+Follow the restart entry of the CFDEMcoupling how-to (`https://doc.aspherix-dem.com/coupling/Section_how_to.html`).
+Also check the case's run script for steps that would remove the results or undo the restart: `decomposePar` (`-force` deletes the computed times), `rm` on `processor*` or time directories, `cfdemCleanCase`, or any other cleanup before `cfdemSimulate`.
