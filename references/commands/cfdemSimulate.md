@@ -55,7 +55,7 @@ Internally starts Aspherix (with the given input script) and the chosen CFDEM so
 By default, the DEM side starts first and opens the socket communication; the CFD side then connects.
 Omit `-np` for a serial run (1 process each side).
 
-`cfdemSimulate` is copied into `$CFDEM_APP_DIR` at compile time, so it behaves like any other solver in CFDEMcoupling once built.
+`cfdemSimulate` is a script in `$CFDEM_SCRIPT_DIR` (see `references/CFDEM_ENVIRONMENT.md`), which is added to `PATH` by the CFDEM environment — it isn't a compiled solver and isn't copied into `$CFDEM_APP_DIR`.
 
 Set `portFilePath "./";` in `twoWaySocketProps` (see `dataExchangeModel_twoWaySocket`) — reduces startup time, and required per-case to avoid socket collisions between concurrent runs.
 
