@@ -1,9 +1,9 @@
 # CFDEM Assistant
 
-An AI skill that helps with the setup of OpenFOAM-based [CFDEM®](https://doc.aspherix-dem.com/coupling/) solvers — simulations that couple OpenFOAM CFD with a DEM particle solver (LIGGGHTS/[Aspherix®](https://www.aspherix-dem.com/)).
+An AI skill that helps with the setup of OpenFOAM-based [CFDEM®](https://doc.aspherix-dem.com/coupling/) solvers — simulations that couple OpenFOAM CFD with the [Aspherix®](https://www.aspherix-dem.com/) DEM solver.
 
 It targets OpenFOAM 10 (the only version the current CFDEM coupling supports), points agents at the public CFDEM coupling documentation, and packages dictionary-, model-family-, and command-specific guidance that's tedious to look up by hand.
-It's a companion to [Aspherix Assistant](https://github.com/CFDEMproject/aspherix-assistant): Aspherix Assistant covers the DEM side of a coupled case (the `.asx`/LIGGGHTS input script), this skill covers the CFD side and the coupling layer itself.
+It's a companion to [Aspherix Assistant](https://github.com/CFDEMproject/aspherix-assistant): Aspherix Assistant covers the DEM side of a coupled case (the `.asx` input script), this skill covers the CFD side and the coupling layer itself.
 
 ## Install
 
