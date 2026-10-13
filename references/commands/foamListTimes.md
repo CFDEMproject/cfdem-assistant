@@ -29,6 +29,8 @@ foamListTimes -processor
 
 For a decomposed case, this lists the times found inside the `processorN/` directories instead of the reconstructed case root — use it to confirm a parallel run actually wrote results before running `reconstructPar`.
 
+It reads `processor0/` only: a time that is missing in another `processorN/` (e.g. after a crash) is still listed. Before restarting from a time, check that it exists in every `processorN/`.
+
 ## Deleting time directories
 
 ```

@@ -40,5 +40,6 @@ Reconstruct only the listed fields — useful when a case has many stored fields
 
 ## Gotchas
 
+- `numberOfSubdomains` must match the existing `processorN/` count, see `decomposePar.md`, "Changing the number of ranks".
 - `reconstructPar` does not delete the `processorN/` directories — don't assume they're gone after reconstruction; clean them up explicitly if you need the disk space back, and only after confirming the reconstructed result is complete.
 - If a parallel run crashed mid-write, the last time directory across processors may be inconsistent (some ranks wrote it, others didn't) — reconstructing that time can produce a corrupt or partial result; prefer reconstructing only up to the last time you've confirmed all processors wrote successfully.
