@@ -13,9 +13,11 @@ Many CFDEM(R)coupling tutorials/unit tests are driven by a `run.config` (JSON) +
   ```
 - `runTestcaseVariant` (in `$CFDEM_ETC_DIR/functions.sh`) renders `run.config` into a concrete `run.sh` via `$CFDEM_ETC_DIR/jsonReader.py --scriptname run.sh`, executes it, then deletes the generated `run.sh`.
 
-## `cleanCFDEMcase` is interactive — safe to run even when you need the output
+## `cleanCFDEMcase` deletes the results
 
-`cleanCFDEMcase` prompts for confirmation before deleting `processor*/`, logs, and the mesh. It does **not** silently wipe `postProcessing/` or other run artifacts. So prefer invoking the case's own `./Autorun.sh` end-to-end rather than re-deriving the run steps by hand — if you need to inspect results afterward (e.g. `postProcessing/<funcObject>` data), just decline/interrupt (Ctrl-C) at the cleanup prompt instead of letting it proceed.
+`cleanCFDEMcase` asks for confirmation (Enter proceeds, Ctrl-C aborts) and then deletes the results of the case: the time and `processor*` directories, `postProcessing`, the logs and the DEM post-processing output.
+The CFD mesh and the DEM restart files are deleted unless `keepCFDmesh` / `keepDEMrestart` is `true`.
+To inspect `postProcessing/` afterwards, press Ctrl-C at the prompt.
 
 ## Known gotcha: generated `run.sh` sources pre-scripts without `./`
 
