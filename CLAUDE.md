@@ -9,13 +9,13 @@ If you're looking for the skill's actual instructions/content, start at `SKILL.m
 ## What this repository is
 
 This repo defines a Claude Code **skill** named "CFDEM Assistant" — it is not an application with source code, build steps, or tests.
-It helps with the setup of OpenFOAM-based CFDEM(R) solvers: simulations that couple OpenFOAM CFD with a DEM particle solver (LIGGGHTS/Aspherix(R)).
+It helps with the setup of OpenFOAM-based CFDEM(R) solvers: simulations that couple OpenFOAM CFD with the Aspherix(R) DEM solver.
 
 The skill targets **OpenFOAM 10** exclusively — not a preference, but the only OpenFOAM version the current CFDEM coupling is compatible with.
 Any OpenFOAM guidance added here (rules, commands, links) must be OpenFOAM-10-specific; don't generalize across OpenFOAM versions.
 
-This skill is a companion to the sibling **Aspherix Assistant** skill (`/home/dll/DCS/Agents/AspherixAssistant`).
-Aspherix Assistant covers the DEM side of a coupled case (the `.asx`/LIGGGHTS input script); this skill covers the CFD side and the coupling layer (the OpenFOAM case, the coupling dictionaries, and how the two solvers are wired together).
+This skill is a companion to the sibling **[Aspherix Assistant](https://github.com/CFDEMproject/aspherix-assistant)** skill.
+Aspherix Assistant covers the DEM side of a coupled case (the `.asx` input script); this skill covers the CFD side and the coupling layer (the OpenFOAM case, the coupling dictionaries, and how the two solvers are wired together).
 Keep that division of responsibility — don't duplicate DEM-side rules here; link to Aspherix Assistant's content instead of forking it.
 
 - `SKILL.md` — the skill definition (frontmatter + instructions loaded when the skill is invoked).
