@@ -57,6 +57,7 @@ See `references/SOLVERS.md` for the available `cfdemSolver*` binaries, which phy
 
 - `cfdemSimulate` usage (the standard way to launch a coupled CFDEM-Aspherix run): `references/commands/cfdemSimulate.md`
 - `Autorun.sh`/`run.config`-driven tutorials and unit tests (incl. the interactive `cleanCFDEMcase` cleanup and a `source`-without-`./` gotcha in generated `run.sh` scripts): `references/commands/Autorun.md`
+- `cfdemCloneCase` usage (clone a case setup without results, e.g. to vary a setting or build a new case variant): `references/commands/cfdemCloneCase.md`
 - CFDEM environment variables and aliases (`CFDEM_PROJECT_DIR`, `cfdemSysTest`, etc.): `references/CFDEM_ENVIRONMENT.md` — check this before assuming a shell has the CFDEM environment loaded.
 
 ## CFDEM Coupling Dictionaries
