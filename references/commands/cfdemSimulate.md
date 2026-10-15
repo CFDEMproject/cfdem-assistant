@@ -57,11 +57,12 @@ Omit `-np` for a serial run (1 process each side).
 
 Set `portFilePath "./";` in `twoWaySocketProps` (see `dataExchangeModel_twoWaySocket`) — reduces startup time, and required per-case to avoid socket collisions between concurrent runs.
 
-On Slurm clusters, `-useSlurm` switches the launch command from `mpirun` to `srun` (with matching options); `-useSlurmHead` instead lets Slurm's own `SBATCH` pragmas determine resources, ignoring `-np` — coupled runs launched this way always add `--overlap`.
+In a Slurm job use `-useSlurm`: it launches both sides with `srun --ntasks <np> --overlap`, so the job's allocation applies; the default `mpirun` does not follow it and concurrent jobs can share cores.
+`-useSlurmHead` (only together with `-useSlurm`) leaves out `--ntasks`: the resources come from the `SBATCH` pragmas and `-np` is ignored.
 Both flags have environment-variable equivalents, useful for setting the behavior globally rather than per-invocation (see `references/CFDEM_ENVIRONMENT.md`):
 
 - `CFDEM_SIM_USE_SLURM` set (to any value, `export CFDEM_SIM_USE_SLURM=""` included) ⟹ same effect as `-useSlurm`.
-- `CFDEM_SIM_SLURM_SBATCH` set (any value) ⟹ same effect as `-useSlurmHead`.
+- `CFDEM_SIM_SLURM_SBATCH` set (any value) ⟹ same effect as `-useSlurmHead`, so `CFDEM_SIM_USE_SLURM` must be set too.
 
 Only the *existence* of these two variables matters, never their value.
 
