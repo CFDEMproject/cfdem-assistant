@@ -13,7 +13,7 @@ source $HOME/DCS-Computing/CFDEMcoupling-<package>-<version>/etc/bashrc
 
 On `zsh`, source `etc/zshrc` from the same install directory instead.
 This is a per-terminal operation — a new terminal has none of this loaded until the `bashrc`/`zshrc` is sourced again, unless made persistent (below).
-After sourcing, verify it worked with the `cfdemSysTest` alias — it prints `CFDEM_ASX_EXEC` and `LD_LIBRARY_PATH`, which must belong to the installation you intend to use, and the hyperthreading recommendation for the `twoWaySocket` data-exchange model.
+After sourcing, verify it worked with the `cfdemSysTest` alias: compare the `$CFDEM_PROJECT_DIR` and `$CFDEM_ASX_EXEC` lines it prints with the installation planned for this session (package, version or branch). `$CFDEM_LIB_DIR` and `$CFDEM_APP_DIR` are printed too once the coupling is compiled. A path from another installation means the wrong `etc/bashrc` was sourced (`CFDEM_PROJECT_DIR`) or something overrides the Aspherix location (`CFDEM_ASX_EXEC`, `LD_LIBRARY_PATH`). It also reports the hyperthreading recommendation for the `twoWaySocket` data-exchange model.
 
 If OpenFOAM or Aspherix weren't installed to their default locations, set `CFDEM_OF_DIR` and/or `CFDEM_ASX_INSTALL_DIR` (see below) *before* sourcing the `bashrc`, not after — the `bashrc` reads and then unsets them during setup.
 
