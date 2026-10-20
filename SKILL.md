@@ -1,6 +1,6 @@
 ---
 name: cfdem-assistant
-description: "CFDEM Assistant"
+description: "Helps set up, debug, or extend OpenFOAM-based CFDEM(R) coupled CFD-DEM simulations (OpenFOAM with the Aspherix DEM solver via CFDEMcoupling): the CFD side and the coupling layer. Trigger when: working in a case directory with a CFD/ folder (constant/couplingProperties, system/decomposeParDict, system/controlDict) alongside a DEM/ folder with a .asx script; the user mentions cfdemSimulate, CFDEMcoupling, couplingProperties, forceModels, voidFractionModels or locateModels; or asks to build, run, extend the run time of, or debug a cfdemSolver* case. For a coupled case also load aspherix-assistant for the DEM/.asx side."
 ---
 
 # Context
