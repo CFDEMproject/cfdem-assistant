@@ -2,8 +2,13 @@
 """Fetch a CFDEM coupling docs page and extract one or more <section id="..."> blocks verbatim.
 
 Usage:
-    scripts/fetch_section.py <url> --list
-    scripts/fetch_section.py <url> <section-id> [<section-id> ...]
+    scripts/fetch_section.py [--docs online|<path>] <url> --list
+    scripts/fetch_section.py [--docs online|<path>] <url> <section-id> [<section-id> ...]
+
+<url> is a https://doc.aspherix-dem.com/coupling/<page>.html URL (or just coupling/<page>.html).
+The page is read from the documentation of the installed Aspherix (found via the `aspherix` binary);
+--docs online|<path> chooses another source (e.g. a monorepo build: documentation/build/html); exit
+code 3 means the source could not be resolved (the agent then asks the user). See doc_source.py.
 
 --list prints every section id on the page, without extracting content.
 Otherwise, prints the exact text of each requested section, in document order,
@@ -14,13 +19,16 @@ syntax) are wrapped in ``` fences so they're visibly distinct from surrounding
 prose.
 """
 import sys
-import urllib.request
 from html.parser import HTMLParser
 
+from doc_source import ONLINE, read, split_docs_arg
+
 BLOCK_TAGS = {"p", "li", "dt", "dd", "h1", "h2", "h3", "h4", "h5", "h6", "tr"}
-SKIP_ANCHOR_CLASSES = {"headerlink", "toc-backref"}
+SKIP_ANCHOR_CLASSES = {"headerlink", "toc-backref", "kw-more", "kw-less"}
+KEYWORD_PART_CLASSES = {"kw-name", "kw-annotation"}
 CODE_START = "\x00CODE_START\x00"
 CODE_END = "\x00CODE_END\x00"
+INDENT = "\x01"  # one nesting level of a `.. keyword::` body; rendered as two spaces
 
 
 class SectionExtractor(HTMLParser):
@@ -33,6 +41,8 @@ class SectionExtractor(HTMLParser):
         self.skip_anchor_depth = None  # tag-stack depth of an anchor we're skipping text for
         self.pre_depth = None  # tag-stack depth of a <pre> code block we're inside
         self.tag_depth = 0
+        self.dl_stack = []  # (tag_depth, is_keyword) of open <dl> elements
+        self.kw_dd_stack = []  # tag_depth of open <dd> bodies of keyword <dl>s
 
     def handle_starttag(self, tag, attrs):
         self.tag_depth += 1
@@ -46,16 +56,28 @@ class SectionExtractor(HTMLParser):
                 if section_id in self.captured and self.capture_depth is None:
                     self.capture_depth = len(self.section_stack)
 
+        if tag == "dl":
+            self.dl_stack.append((self.tag_depth, "keyword" in (attrs.get("class") or "").split()))
+        elif tag == "dd" and self.dl_stack and self.dl_stack[-1][1]:
+            self.kw_dd_stack.append(self.tag_depth)
+
         if tag == "a" and self.skip_anchor_depth is None:
             classes = set((attrs.get("class") or "").split())
             if classes & SKIP_ANCHOR_CLASSES:
                 self.skip_anchor_depth = self.tag_depth
 
+        # `.. keyword::` signatures render name/type/default as adjacent inline
+        # elements with no whitespace between them; separate them explicitly.
+        if self.capture_depth is not None and self.pre_depth is None and tag in {"span", "em"}:
+            classes = set((attrs.get("class") or "").split())
+            if classes & KEYWORD_PART_CLASSES:
+                self._emit(" ")
+
         if tag == "pre" and self.capture_depth is not None and self.pre_depth is None:
             self.pre_depth = self.tag_depth
             self._emit(CODE_START)
         elif self.capture_depth is not None and self.pre_depth is None and tag in BLOCK_TAGS:
-            self._emit("\n")
+            self._emit("\n" + INDENT * len(self.kw_dd_stack))
 
     def handle_endtag(self, tag):
         if tag == "section" and self.section_stack:
@@ -65,6 +87,10 @@ class SectionExtractor(HTMLParser):
         if self.pre_depth is not None and self.tag_depth == self.pre_depth:
             self._emit(CODE_END)
             self.pre_depth = None
+        if self.dl_stack and tag == "dl" and self.dl_stack[-1][0] == self.tag_depth:
+            self.dl_stack.pop()
+        if self.kw_dd_stack and tag == "dd" and self.kw_dd_stack[-1] == self.tag_depth:
+            self.kw_dd_stack.pop()
         if self.skip_anchor_depth is not None and self.tag_depth == self.skip_anchor_depth:
             self.skip_anchor_depth = None
         self.tag_depth -= 1
@@ -82,9 +108,15 @@ class SectionExtractor(HTMLParser):
             self.captured[section_id] = []
 
 
-def fetch_html(url):
-    with urllib.request.urlopen(url) as resp:
-        return resp.read().decode("utf-8", errors="replace")
+def fetch_html(url, choice=None):
+    rel = url[len(ONLINE):] if url.startswith(ONLINE) else url.lstrip("/")
+    product, _, page = rel.partition("/")
+    try:
+        html, _ = read(product, page.split("#")[0], choice)
+    except OSError as e:  # missing local file, or urllib.error.HTTPError/URLError
+        sys.exit(f"page not found: {product}/{page}: {e}\n(it may be newer than the installed version, "
+                 "or not enabled by the licence)")
+    return html
 
 
 def render(chunks):
@@ -101,19 +133,28 @@ def render(chunks):
 
 
 def _render_prose(text):
-    lines = [line.strip() for line in text.splitlines()]
-    lines = [line for line in lines if line]
+    lines = []
+    pending = 0  # indent of a preceding otherwise-empty line (source whitespace after <dt>)
+    for line in text.splitlines():
+        own = line.count(INDENT)
+        line = line.strip(INDENT + " \t")
+        if not line:
+            pending = own
+            continue
+        lines.append("  " * max(own, pending) + line)
+        pending = 0
     return "\n".join(lines)
 
 
 def main():
-    if len(sys.argv) < 3:
+    choice, argv = split_docs_arg(sys.argv[1:])
+    if len(argv) < 2:
         print(__doc__, file=sys.stderr)
         sys.exit(1)
 
-    url = sys.argv[1]
-    args = sys.argv[2:]
-    html = fetch_html(url)
+    url = argv[0]
+    args = argv[1:]
+    html = fetch_html(url, choice)
 
     if args == ["--list"]:
         parser = SectionExtractor()

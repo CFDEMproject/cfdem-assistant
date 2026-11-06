@@ -31,8 +31,8 @@ Set `cgWarnOnly true;` in `couplingProperties` to downgrade this to a warning pr
 Drag: `Archimedes`, `ArchimedesIB`, `BeetstraDrag`, `BenyahiaDrag`, `DEMbasedDrag`, `DeereDrag`, `DiFeliceDrag`, `GidaspowDrag`, `HoelzerSommerfeldDrag`, `KochHillDrag`, `OzelSundaresanDrag`, `RongDrag`, `SchillerNaumannDrag`, `StokesClumpDrag`, `StokesSpheroidDrag`, `noDrag`.
 Lift: `AutonLift`, `MeiLift`.
 Immersed-boundary: `ArchimedesIB`, `ShirgaonkarIB`, `newIB`.
-Lagrangian/Eulerian scalar & spray coupling: `LaEuFilmFormation`, `LaEuFilmFormationSpray`, `LaEuForcingHFDIBM`, `LaEuScalarCapture`, `LaEuScalarDust`, `LaEuScalarEmit`, `LaEuScalarLiquid`, `LaEuScalarMass`, `LaEuScalarRadiation`, `LaEuScalarSpray`, `LaEuScalarTemp`, `LaEuScalarTempIB`.
-Other physics: `electrostaticForce`, `evaporateThermal`, `gradPForce`, `interface`, `liquidSurfaceReflection`, `melting`, `periodicPressure`, `rotorZoneMomentumSource`, `scalarGeneralExchange`, `scalarGeneralExchangePhaseChange`, `transferFields`, `transferTurbulence`, `transferVapour`, `turbulenceSlipInduced`, `virtualMassForce`, `viscForce`.
+Lagrangian/Eulerian scalar & spray coupling: `LaEuFilmFormation`, `LaEuFilmFormationSpray`, `LaEuForcingHFDIBM`, `LaEuScalarCapture`, `LaEuScalarEmit`, `LaEuScalarMass`, `LaEuScalarRadiation`, `LaEuScalarSpray`, `LaEuScalarTemp`, `LaEuScalarTempIB`.
+Other physics: `electrostaticForce`, `evaporateThermal`, `gradPForce`, `interface`, `liquidSurfaceReconstruction`, `melting`, `periodicPressure`, `rotorZoneMomentumSource`, `scalarGeneralExchange`, `scalarGeneralExchangePhaseChange`, `transferFields`, `transferTurbulence`, `transferVapour`, `turbulenceSlipInduced`, `virtualMassForce`, `viscForce`.
 
 Check `List_forceModels.html` (via `references/CFDEM_DOC_SEARCH.md`) for the current authoritative list before picking one — this list can drift from the live docs over time.
 
