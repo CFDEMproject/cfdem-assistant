@@ -3,7 +3,7 @@
 The `cfdemSolver*` binaries are the actual coupled CFD-DEM executables — each is a modified OpenFOAM solver with CFDEMcoupling's particle-coupling machinery layered on top.
 Picking the right one is a physics decision (unresolved vs. resolved/immersed-boundary, incompressible vs. scalar-transport, particle shape support), made before touching `couplingProperties` — the model selections available there depend on which solver is running.
 Launch the chosen solver with `cfdemSimulate -s <solverName>` (see `references/commands/cfdemSimulate.md`), never by invoking the binary directly.
-Source: [`List_solvers.html`](https://doc.aspherix-dem.com/coupling/List_solvers.html) and each solver's own page — see `references/CFDEM_DOC_SEARCH.md`.
+Source: the solver overview page (find it with `scripts/doc_index.py solvers`) and each solver's own page — see `references/CFDEM_DOC_SEARCH.md`.
 
 ## Available solvers
 
@@ -59,7 +59,7 @@ Supports an arbitrary number of fluid phases, inherited from OpenFOAM's generic 
 
 ## Solvers withheld from the public docs
 
-`List_solvers.html` also lists `cfdemSolverBubble`, `cfdemSolverChem`, `cfdemSolverForcingIB`, `cfdemSolverHFDIBMScalar`, and `cfdemRhoChtMultiRegion`.
+The solver overview page also lists `cfdemSolverBubble`, `cfdemSolverChem`, `cfdemSolverForcingIB`, `cfdemSolverHFDIBMScalar`, and `cfdemRhoChtMultiRegion`.
 Their pages return HTTP 200 with a placeholder body ("*The page you requested cannot be found. Most likely this is because the particular feature is not enabled by your license.*") rather than a real 404 — don't mistake that for a broken link or spend a fetch-strategy escalation retrying it (see `references/CFDEM_DOC_SEARCH.md`).
 If one of these is actually needed for a case, its syntax isn't publicly documented; check the CFDEMcoupling source tree (`src/lagrangian/cfdemParticle/`) or internal DCS material instead of guessing from the solver name alone.
 

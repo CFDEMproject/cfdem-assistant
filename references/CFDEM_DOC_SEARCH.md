@@ -41,6 +41,8 @@ scripts/doc_index.py forceModel     # only entries whose name/displayname contai
 Each line is `name domain:role priority uri displayname`.
 `std:doc` entries are full pages (`uri` is the page's `.html` filename); `std:confval`/`std:envvar` entries are settings/environment-variable anchors within a page, not standalone pages.
 
+**Per-model keywords are not in `objects.inv`**, so `doc_index.py <keyword>` finds nothing for them: find the model page, then read its keyword section (`fetch_section.py <url> --list` shows the section ids of the docs in use).
+
 ## Page structure
 
 Model/command/solver pages follow a consistent Sphinx layout, so name the section you need instead of asking for the whole page.
