@@ -1,8 +1,9 @@
 """Resolve where to read the Aspherix documentation from.
 
 Default: the documentation shipped with the installed Aspherix, found relative to the `aspherix`
-binary on PATH (<bin>/../documentation/<product>/). It matches the installed version; the website
-always shows the latest release. The source in use is announced on stderr.
+binary on PATH (<bin>/../documentation/<product>/); if there is none on PATH, the binary named by
+$CFDEM_ASX_EXEC is used. It matches the installed version; the website always shows the latest
+release. The source in use is announced on stderr.
 
 Explicit choice, which wins over the default (flag over env var):
     --docs online        the website https://doc.aspherix-dem.com/ (version / licence may differ)
@@ -54,13 +55,19 @@ def resolve(product, choice=None):
                      f"directory containing {product}/)")
         return str(d) + "/", f"local docs {d} (explicit choice)", True
     exe = shutil.which("aspherix")
+    origin = "binary"
+    if not exe:
+        # Fallback: the CFDEM environment points to the executable via $CFDEM_ASX_EXEC
+        env_exe = os.environ.get("CFDEM_ASX_EXEC")
+        if env_exe and Path(env_exe).expanduser().is_file():
+            exe, origin = str(Path(env_exe).expanduser()), "binary from $CFDEM_ASX_EXEC"
     if exe:
         d = Path(exe).resolve().parent.parent / "documentation" / product
         if d.is_dir():
-            return str(d) + "/", f"installed docs {d} (derived from the aspherix binary {exe})", True
+            return str(d) + "/", f"installed docs {d} (derived from the aspherix {origin} {exe})", True
         why = f"the aspherix binary {exe} has no {d} next to it"
     else:
-        why = "no `aspherix` binary found on PATH"
+        why = "no `aspherix` binary found on PATH and $CFDEM_ASX_EXEC is unset or not a file"
     print(f"DOCS_SOURCE_UNRESOLVED: {why}, so the installed documentation cannot be located.\n"
           "Ask the user which to use, then re-run with --docs:\n"
           "  --docs online  : the online docs (doc.aspherix-dem.com). Latest release - the version, or "
