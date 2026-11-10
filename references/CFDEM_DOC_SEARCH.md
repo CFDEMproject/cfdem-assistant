@@ -5,14 +5,14 @@ The search strategy below mirrors Aspherix Assistant's own `DOC_SEARCH.md` exact
 
 ## Which documentation to read
 
-By default the scripts read the documentation of the **installed Aspherix**: `<install>/documentation/<product>/`, found relative to the `aspherix` binary on `PATH`. It matches the installed version; the website always shows the latest release.
+By default the scripts read the documentation of the **installed Aspherix**: `<install>/documentation/<product>/`, found relative to the `aspherix` binary on `PATH`; if there is no `aspherix` on `PATH`, the binary named by `$CFDEM_ASX_EXEC` (set by the CFDEM environment, see `CFDEM_ENVIRONMENT.md`) is used instead. It matches the installed version; the website always shows the latest release.
 `scripts/doc_index.py` and `scripts/fetch_section.py` say which source they use on stderr (`# Using ...`); mention it to the user when it matters.
 `fetch_section.py` takes the website URL (or `<product>/<page>.html`) and maps it to the source in use.
 
 An explicit choice overrides that default: `--docs online` (the website) or `--docs <path>` (a local documentation directory containing `<product>/`, e.g. a developer build) on either script, or the same value in `$ASPHERIX_DOC_BASE` for a persistent choice (not set by the installer).
 A source named by the user or in the project's `CLAUDE.md` counts as explicit: pass it with `--docs` on every call (shell state doesn't persist between calls).
 
-If there is no explicit choice and no `aspherix` binary (or no documentation next to it), the scripts print `DOCS_SOURCE_UNRESOLVED` and exit with code 3, without guessing. They can't prompt, so **ask the user** (e.g. with `AskUserQuestion`) whether to use
+If there is no explicit choice and no `aspherix` binary (neither on `PATH` nor via `$CFDEM_ASX_EXEC`, or no documentation next to it), the scripts print `DOCS_SOURCE_UNRESOLVED` and exit with code 3, without guessing. They can't prompt, so **ask the user** (e.g. with `AskUserQuestion`) whether to use
 - the **online docs**, pointing out that they show the latest release, so the version, or features enabled by the licence, may differ from the user's Aspherix; or
 - a **local documentation directory** (relevant for developers),
 
