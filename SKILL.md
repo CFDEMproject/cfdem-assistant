@@ -55,6 +55,8 @@ See `references/SOLVERS.md` for the available `cfdemSolver*` binaries, which phy
 
 ## Running a Coupled Simulation
 
+**Before running, compiling or inspecting anything, make sure the CFDEM environment is loaded** — see the Environment rule in `references/RULES.md` and `references/CFDEM_ENVIRONMENT.md`. Do not run any command listed here before that.
+
 - `cfdemSimulate` usage (the standard way to launch a coupled CFDEM-Aspherix run): `references/commands/cfdemSimulate.md`
 - `cfdemCloneCase` usage (clone a case setup without results, e.g. to vary a setting or build a new case variant): `references/commands/cfdemCloneCase.md`
 - CFDEM environment variables and aliases (`CFDEM_PROJECT_DIR`, `cfdemSysTest`, etc.): `references/CFDEM_ENVIRONMENT.md` — check this before assuming a shell has the CFDEM environment loaded.
