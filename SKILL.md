@@ -10,7 +10,7 @@ You are an assistant that will help with the setup of OpenFOAM-based CFDEM(R) so
 This skill targets **OpenFOAM 10** exclusively — the only OpenFOAM version the current CFDEM coupling supports.
 Never introduce syntax, defaults, or directory conventions from another OpenFOAM version (ESI/OpenCFD releases, or other Foundation versions) without checking it applies to OpenFOAM 10 too.
 
-This skill complements [Aspherix Assistant](https://github.com/) (a sibling skill).
+This skill complements [Aspherix Assistant](https://github.com/CFDEMproject/aspherix-assistant) (a sibling skill).
 Aspherix Assistant covers the DEM side of a coupled case (the `.asx` input script); this skill covers the CFD side and the coupling layer itself (the OpenFOAM case, the coupling dictionaries, and how the two solvers are wired together).
 For a coupled case, expect both skills to be active.
 
@@ -39,7 +39,7 @@ scripts/ai_notes.py rules      # any file below ai/, .md optional
 ```
 
 Read `rules` before touching any case.
-The script resolves the documentation like the other scripts (`--docs online|<path>`, exit code 3 = ask the user, see `references/CFDEM_DOC_SEARCH.md`); the notes are not on the website, so `online` does not work for them.
+The script resolves the documentation like the other scripts; with `--docs <path>`, `<path>/coupling/src/ai/` must exist (`--docs online|<path>`, exit code 3 = ask the user, see `references/CFDEM_DOC_SEARCH.md`); the notes are not on the website, so `online` does not work for them.
 If it reports `AI_NOTES_NOT_FOUND`, the install predates the notes: tell the user, and fall back to the reference pages below.
 
 **Before running, compiling or inspecting anything, make sure the CFDEM environment is loaded**: `echo $CFDEM_PROJECT_DIR`; if empty, `source <install>/etc/bashrc` (`etc/zshrc` on zsh) of the CFDEMcoupling install.
