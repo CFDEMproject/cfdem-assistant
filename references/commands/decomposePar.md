@@ -60,4 +60,4 @@ For a multi-region case, decompose every region in one call rather than one at a
 ## Gotchas
 
 - Check the decomposition quality before committing to a long run: `decomposePar -cellDist` writes a `cellDist` field you can visualize to confirm the split is reasonably balanced, not lopsided across ranks.
-- If the case uses a coupling or dynamic-mesh setup, confirm which regions/fields actually need decomposing — see `references/RULES.md` for anything CFDEM-coupling-specific about how the DEM side interacts with a decomposed CFD domain.
+- If the case uses a coupling or dynamic-mesh setup, confirm which regions/fields actually need decomposing — see the CFDEM notes (`scripts/ai_notes.py`) and the `cfdemSimulate` page for how the DEM side interacts with a decomposed CFD domain.

@@ -19,7 +19,7 @@ Most solvers — both stock OpenFOAM solvers and the CFDEM solver family (`cfdem
 This runs the actual solver executable in a post-processing mode: it reconstructs the solver's runtime model objects (equations of state, thermophysical/transport models, turbulence models, the CFDEM coupling objects) for each requested time step, then evaluates the function object against that reconstructed state.
 Because of that, `<solverName> -postProcess` can produce derived fields the standalone `postProcess` utility cannot — for example regenerating `rho` from `T` via the case's thermophysical model, when `rho` itself was never written to disk.
 
-Reach for `<solverName> -postProcess` instead of the standalone `postProcess` utility whenever the field you need is *derived* from the solver's internal model rather than stored directly — check `references/RULES.md` for which fields the CFDEM solvers commonly need reconstructed this way.
+Reach for `<solverName> -postProcess` instead of the standalone `postProcess` utility whenever the field you need is *derived* from the solver's internal model rather than stored directly — check the solver's reference page for which fields it derives.
 
 ## Running a function object already defined in the case
 

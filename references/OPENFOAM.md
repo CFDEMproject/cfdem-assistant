@@ -12,4 +12,4 @@ Use the links below to verify specifics (an exact dictionary key, a BC type, a s
 - [OpenFOAM Wiki](https://openfoamwiki.net/)
 - [CFD-Online OpenFOAM forum](https://www.cfd-online.com/Forums/openfoam/)
 
-Anything CFDEM-specific (coupling dictionaries, particle-fluid coupling models, the `cfdemSolver*` family) is out of scope for this file — see `RULES.md` and the CFDEM coupling references instead.
+Anything CFDEM-specific (coupling dictionaries, particle-fluid coupling models, the `cfdemSolver*` family) is out of scope for this file — see the CFDEM notes (`scripts/ai_notes.py`) and the CFDEM reference pages instead.
