@@ -5,7 +5,7 @@ The search strategy below mirrors Aspherix Assistant's own `DOC_SEARCH.md` exact
 
 ## Which documentation to read
 
-By default the scripts read the documentation of the **installed Aspherix**: `<install>/documentation/<product>/`, found relative to the `aspherix` binary on `PATH`; if there is no `aspherix` on `PATH`, the binary named by `$CFDEM_ASX_EXEC` (set by the CFDEM environment, see `CFDEM_ENVIRONMENT.md`) is used instead. It matches the installed version; the website always shows the latest release.
+By default the scripts read the documentation of the **installed Aspherix**: `<install>/documentation/<product>/`, found relative to the `aspherix` binary on `PATH`; if there is no `aspherix` on `PATH`, the binary named by `$CFDEM_ASX_EXEC` (set by the CFDEM environment, see `environment.md` of the CFDEM notes) is used instead. It matches the installed version; the website always shows the latest release.
 `scripts/doc_index.py` and `scripts/fetch_section.py` say which source they use on stderr (`# Using ...`); mention it to the user when it matters.
 `fetch_section.py` takes the website URL (or `<product>/<page>.html`) and maps it to the source in use.
 

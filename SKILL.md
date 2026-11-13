@@ -10,7 +10,7 @@ You are an assistant that will help with the setup of OpenFOAM-based CFDEM(R) so
 This skill targets **OpenFOAM 10** exclusively — the only OpenFOAM version the current CFDEM coupling supports.
 Never introduce syntax, defaults, or directory conventions from another OpenFOAM version (ESI/OpenCFD releases, or other Foundation versions) without checking it applies to OpenFOAM 10 too.
 
-This skill complements [Aspherix Assistant](https://github.com/) (a sibling skill).
+This skill complements [Aspherix Assistant](https://github.com/CFDEMproject/aspherix-assistant) (a sibling skill).
 Aspherix Assistant covers the DEM side of a coupled case (the `.asx` input script); this skill covers the CFD side and the coupling layer itself (the OpenFOAM case, the coupling dictionaries, and how the two solvers are wired together).
 For a coupled case, expect both skills to be active.
 
@@ -26,63 +26,48 @@ If it reports being behind, tell the user how many commits and offer to pull —
 
 # Resources
 
-You have access to the following:
+## CFDEM notes shipped with the code (read these first)
 
-## Rules
+The notes on the CFDEM tools and models — rules every case must follow, the CFDEM environment, solver choice and gotchas, `couplingProperties`, model families, `cfdemSimulate`/`cfdemCloneCase`, and coupling-specific debugging strategies — live in the CFDEMcoupling repository (`documentation/coupling/src/ai/`) and ship with the installed documentation, so they match the installed version.
+They are deliberately not copied into this skill.
 
-See `references/RULES.md` — the coupling- and case-specific rules every CFDEM case built with this skill must follow.
+Read the index, then the files it points to for the task at hand:
+
+```
+scripts/ai_notes.py            # INDEX.md
+scripts/ai_notes.py rules      # any file below ai/, .md optional
+```
+
+Read `rules` before touching any case.
+The script resolves the documentation like the other scripts; with `--docs <path>`, `<path>/coupling/src/ai/` must exist (`--docs online|<path>`, exit code 3 = ask the user, see `references/CFDEM_DOC_SEARCH.md`); the notes are not on the website, so `online` does not work for them.
+If it reports `AI_NOTES_NOT_FOUND`, the install predates the notes: tell the user, and fall back to the reference pages below.
+
+**Before running, compiling or inspecting anything, make sure the CFDEM environment is loaded**: `echo $CFDEM_PROJECT_DIR`; if empty, `source <install>/etc/bashrc` (`etc/zshrc` on zsh) of the CFDEMcoupling install.
+`aspherix` missing from `PATH` usually means the environment is not loaded, not that Aspherix is missing; the notes are found via `$CFDEM_ASX_EXEC` once it is.
+Details are in `environment.md` of the notes.
+
+## CFDEM reference documentation
+
+The CFDEM(R)/CFDEMcoupling reference pages (syntax, keywords, defaults, model lists) are a Sphinx + Read the Docs site shared with the Aspherix documentation.
+`references/CFDEM_DOC_SEARCH.md` says how to find and fetch the right page from the installed documentation.
 
 ## OpenFOAM baseline
 
 OpenFOAM itself is well represented in model training data — don't re-derive or dump dictionary syntax that's already reliable general knowledge.
-See `references/OPENFOAM.md` for the short list of official documentation links to use when you need to verify something specific (a dictionary key, a boundary condition type, a solver flag) rather than relying on recall.
+See `references/OPENFOAM.md` for the short list of official documentation links to verify a specific detail (a dictionary key, a boundary condition type, a solver flag).
 
-## Guidelines
+## OpenFOAM utility guidance
 
-Per-command guidance goes in `references/commands/<name>.md`, one file per command worth documenting beyond the public docs — start with these when inspecting or debugging a case:
+Per-command guidance, one file per command, for inspecting or debugging a case:
 
-- `foamDictionary` usage: `references/commands/foamDictionary.md`
-- `checkMesh` usage: `references/commands/checkMesh.md`
-- `foamListTimes` usage: `references/commands/foamListTimes.md`
-- `postProcess` usage: `references/commands/postProcess.md`
-- `foamLog` usage: `references/commands/foamLog.md`
-- `decomposePar` usage: `references/commands/decomposePar.md`
-- `reconstructPar` usage: `references/commands/reconstructPar.md`
+- `foamDictionary`: `references/commands/foamDictionary.md`
+- `checkMesh`: `references/commands/checkMesh.md`
+- `foamListTimes`: `references/commands/foamListTimes.md`
+- `postProcess`: `references/commands/postProcess.md`
+- `foamLog`: `references/commands/foamLog.md`
+- `decomposePar`: `references/commands/decomposePar.md`
+- `reconstructPar`: `references/commands/reconstructPar.md`
 
-## CFDEM Solvers
+## General strategies
 
-See `references/SOLVERS.md` for the available `cfdemSolver*` binaries, which physics each is for, and which model families are gated behind IB/VoF/scalar-transport support — pick the right solver before configuring `couplingProperties`.
-
-## Running a Coupled Simulation
-
-**Before running, compiling or inspecting anything, make sure the CFDEM environment is loaded** — see the Environment rule in `references/RULES.md` and `references/CFDEM_ENVIRONMENT.md`. Do not run any command listed here before that.
-
-- `cfdemSimulate` usage (the standard way to launch a coupled CFDEM-Aspherix run): `references/commands/cfdemSimulate.md`
-- `cfdemCloneCase` usage (clone a case setup without results, e.g. to vary a setting or build a new case variant): `references/commands/cfdemCloneCase.md`
-- CFDEM environment variables and aliases (`CFDEM_PROJECT_DIR`, `cfdemSysTest`, etc.): `references/CFDEM_ENVIRONMENT.md` — check this before assuming a shell has the CFDEM environment loaded.
-
-## CFDEM Coupling Dictionaries
-
-Per-dictionary reference goes in `references/dictionaries/<name>.md`, one file per CFDEM coupling dictionary worth documenting beyond the public docs:
-
-- `couplingProperties` reference: `references/dictionaries/couplingProperties.md` — the central coupling dictionary; read this first for any coupled case.
-
-## CFDEM Model Families
-
-Per-family reference goes in `references/models/<name>.md`, one file per model family worth documenting beyond the public docs — an overview of the base-class command and every available model, not a full page per individual model:
-
-- `forceModels` (and `forceSubModels`) reference: `references/models/forceModels.md`
-- `voidFractionModels` reference: `references/models/voidFractionModels.md`
-- `locateModels` reference: `references/models/locateModels.md`
-- `smoothingModels` reference: `references/models/smoothingModels.md`
-- `postProcessingModels` reference: `references/models/postProcessingModels.md`
-
-## Strategies
-
-See `references/strategies/STRATEGIES.md`
-
-## CFDEM Coupling Documentation
-
-The CFDEM(R)/CFDEMcoupling documentation, a Sphinx + Read the Docs site shared with the Aspherix documentation.
-
-Read the documentation of the installed Aspherix (the scripts find it via the `aspherix` binary); if it can't be found, ask the user whether to use the online docs or a local path. `references/CFDEM_DOC_SEARCH.md` has the details and says how to find and fetch the right page.
+`references/strategies/STRATEGIES.md` holds problem-solving strategies that do not depend on the CFDEM version (validation, comparison, meshing); the coupling-specific ones are in the notes' `strategies.md`.
