@@ -1,6 +1,6 @@
 # Strategies
 
-Short, version-independent problem-solving strategies for building and debugging CFDEM-coupled cases; coupling-specific ones are in the CFDEM notes (`scripts/ai_notes.py`, `strategies.md`).
+Short, version-independent problem-solving strategies for building and debugging CFDEM-coupled cases; coupling-specific ones are in the CFDEM notes (`scripts/ai_notes.py`, notes of `Section_how_to`).
 A strategy that needs its own examples or multi-step walkthrough gets its own `references/strategies/<name>.md` file, linked from here.
 
 ## Verify a suspected explanation for a quantitative gap before reporting it

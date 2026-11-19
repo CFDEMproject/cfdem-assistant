@@ -78,6 +78,13 @@ def resolve(product, choice=None):
     sys.exit(EXIT_UNRESOLVED)
 
 
+def page_not_found(product, page, exc):
+    """One message for a page that could not be read, shared by all scripts."""
+    reason = "no such file" if isinstance(exc, FileNotFoundError) else str(exc)
+    return (f"PAGE_NOT_FOUND: {product}/{page} ({reason}). A typo, a page newer than the installed "
+            "version, or a page not enabled by the licence.")
+
+
 def read(product, page, choice=None, binary=False):
     """Read `page` of `product` docs. Returns (data, label). Raises OSError if the page is missing."""
     base, label, local = resolve(product, choice)

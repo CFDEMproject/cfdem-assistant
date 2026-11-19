@@ -13,7 +13,7 @@ See [`INSTALLATION.md`](INSTALLATION.md) for exact per-tool install paths and me
 ## What's in here
 
 - `SKILL.md` — the skill definition: context, links to the public CFDEM coupling [docs](https://doc.aspherix-dem.com/coupling/), and pointers into `references/`.
-- `scripts/ai_notes.py` — prints the CFDEM notes (rules, environment, solvers, `couplingProperties`, models, commands, coupling strategies). The notes are *not* in this repo: they live in the CFDEMcoupling repository (`documentation/coupling/src/ai/`) and ship with the installed documentation, so they are versioned with the code they describe.
+- `scripts/ai_notes.py` — prints the CFDEM notes (rules, environment, solvers, `couplingProperties`, model keywords, `cfdemSimulate`, coupling strategies). The notes are *not* in this repo: they live in the CFDEMcoupling repository as `ai-note` blocks in the reference pages (HTML comments in the built page, not rendered) and ship with the installed documentation, so they are versioned with the code they describe.
 - `references/OPENFOAM.md` — a short, deliberately thin list of links to official OpenFOAM 10 documentation.
 - `references/CFDEM_DOC_SEARCH.md` — how to search and fetch the right page from the CFDEM coupling documentation.
 - `references/commands/<name>.md` — per-command guidance for OpenFOAM utilities (`checkMesh`, `foamDictionary`, …), one file per command.

@@ -17,14 +17,17 @@ extraction, meant as a deterministic alternative to a lossy WebFetch-style summa
 Code/config blocks (Sphinx "highlight" <pre> blocks — the actual dictionary
 syntax) are wrapped in ``` fences so they're visibly distinct from surrounding
 prose.
+The AI notes of the page (hidden html comments, see ai_notes.py) are appended at the end.
 """
 import sys
 from html.parser import HTMLParser
 
-from doc_source import ONLINE, read, split_docs_arg
+from ai_notes import page_notes
+from doc_source import ONLINE, page_not_found, read, split_docs_arg
 
 BLOCK_TAGS = {"p", "li", "dt", "dd", "h1", "h2", "h3", "h4", "h5", "h6", "tr"}
-SKIP_ANCHOR_CLASSES = {"headerlink", "toc-backref"}
+# permalink and table-of-contents anchors, and the "... more" / "less" toggles of folded text
+SKIP_ANCHOR_CLASSES = {"headerlink", "toc-backref", "kw-more", "kw-less"}
 CODE_START = "\x00CODE_START\x00"
 CODE_END = "\x00CODE_END\x00"
 
@@ -94,8 +97,7 @@ def fetch_html(url, choice=None):
     try:
         html, _ = read(product, page.split("#")[0], choice)
     except OSError as e:  # missing local file, or urllib.error.HTTPError/URLError
-        sys.exit(f"page not found: {product}/{page}: {e}\n(it may be newer than the installed version, "
-                 "or not enabled by the licence)")
+        sys.exit(page_not_found(product, page.split("#")[0], e))
     return html
 
 
@@ -150,6 +152,10 @@ def main():
         print(f"=== {section_id} ===")
         print(render(chunks))
         print()
+
+    # AI notes are html comments, which the extraction above drops: append them
+    for note in page_notes(html):
+        print(f"=== AI note of this page ===\n{note}\n")
 
     if not found_any:
         sys.exit(1)

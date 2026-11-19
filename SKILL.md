@@ -28,23 +28,25 @@ If it reports being behind, tell the user how many commits and offer to pull —
 
 ## CFDEM notes shipped with the code (read these first)
 
-The notes on the CFDEM tools and models — rules every case must follow, the CFDEM environment, solver choice and gotchas, `couplingProperties`, model families, `cfdemSimulate`/`cfdemCloneCase`, and coupling-specific debugging strategies — live in the CFDEMcoupling repository (`documentation/coupling/src/ai/`) and ship with the installed documentation, so they match the installed version.
+The notes on the CFDEM tools and models — rules every case must follow, the CFDEM environment, solver choice and gotchas, `couplingProperties`, model keywords, `cfdemSimulate`, and coupling-specific debugging strategies — live in the CFDEMcoupling repository, as `.. ai-note::` blocks in the reference pages (`documentation/coupling/src/`).
+In the built documentation they are HTML comments (`<!-- AI-NOTE ... -->`): not rendered in a browser, but in the page source of the installed documentation, so they match the installed version.
 They are deliberately not copied into this skill.
-
-Read the index, then the files it points to for the task at hand:
+Plain HTML-to-text readers and fetch tools drop comments, so read them with the script:
 
 ```
-scripts/ai_notes.py            # INDEX.md
-scripts/ai_notes.py rules      # any file below ai/, .md optional
+scripts/ai_notes.py                  # the notes of all pages (start here)
+scripts/ai_notes.py cfdemSimulate    # the notes of the named pages, .html optional
 ```
 
-Read `rules` before touching any case.
-The script resolves the documentation like the other scripts; with `--docs <path>`, `<path>/coupling/src/ai/` must exist (`--docs online|<path>`, exit code 3 = ask the user, see `references/CFDEM_DOC_SEARCH.md`); the notes are not on the website, so `online` does not work for them.
+Run it without arguments once before touching any case: the first block (`Section_gettingStarted`) holds the rules every case must follow, the others are keyed by the page they belong to.
+`scripts/fetch_section.py` appends the notes of the page it reads, so a page read through it brings its notes along.
+The script resolves the documentation like the other scripts (`--docs online|<path>`, exit code 3 = ask the user, see `references/CFDEM_DOC_SEARCH.md`); without page names it needs a local documentation directory (`online` has no page list).
+Pages not enabled by the licence are replaced by a placeholder in the installed documentation and carry no notes: that is normal.
 If it reports `AI_NOTES_NOT_FOUND`, the install predates the notes: tell the user, and fall back to the reference pages below.
 
 **Before running, compiling or inspecting anything, make sure the CFDEM environment is loaded**: `echo $CFDEM_PROJECT_DIR`; if empty, `source <install>/etc/bashrc` (`etc/zshrc` on zsh) of the CFDEMcoupling install.
 `aspherix` missing from `PATH` usually means the environment is not loaded, not that Aspherix is missing; the notes are found via `$CFDEM_ASX_EXEC` once it is.
-Details are in `environment.md` of the notes.
+Details are in the notes of `environmentVars`.
 
 ## CFDEM reference documentation
 

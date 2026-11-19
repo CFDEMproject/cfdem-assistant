@@ -22,11 +22,11 @@ Keep that division of responsibility — don't duplicate DEM-side rules here; li
 - `references/OPENFOAM.md` — links to *official* OpenFOAM documentation, used to verify specifics rather than to teach OpenFOAM from scratch.
   Deliberately thin: see "OpenFOAM content stays thin" below.
 - `references/commands/<name>.md` — per-command guidance for **OpenFOAM** utilities (`checkMesh`, `foamDictionary`, …), one file per command worth documenting beyond the public docs.
-- `scripts/ai_notes.py` — reads the CFDEM notes from the installed documentation.
+- `scripts/ai_notes.py` — reads the CFDEM notes (hidden `AI-NOTE` HTML comments in the reference pages) from the installed documentation.
 
 ## CFDEM-tied content does not live here
 
-Anything tied to the CFDEMcoupling code (rules, environment, solvers, dictionaries, model families, `cfdemSimulate`/`cfdemCloneCase`, coupling-specific strategies) lives in the CFDEMcoupling repository under `documentation/coupling/src/ai/` and is read from the installed documentation by `scripts/ai_notes.py`.
+Anything tied to the CFDEMcoupling code (rules, environment, solvers, dictionaries, model families, `cfdemSimulate`/`cfdemCloneCase`, coupling-specific strategies) lives in the CFDEMcoupling repository as `.. ai-note::` blocks in the reference pages (`documentation/coupling/src/`) and is read from the installed documentation by `scripts/ai_notes.py`.
 Do not add such content here: it would go stale when the code changes.
 Change it in the CFDEMcoupling repository, in the same PR as the code change.
 Only content independent of the CFDEM version belongs in this repo.
@@ -70,7 +70,7 @@ This matches the convention already used in the sibling Aspherix Assistant repo.
 
 ## Working in this repo
 
-- Rules and other CFDEM-tied guidance go into the CFDEMcoupling repository's `ai/` notes, not here.
+- Rules and other CFDEM-tied guidance go into the CFDEMcoupling repository's `ai-note` blocks, not here.
 - When adding guidance specific to one command, put it in its own `references/commands/<name>.md` file and link it from `SKILL.md`, rather than growing `SKILL.md` itself.
 - When adding a problem-solving strategy: a short one goes directly in `references/strategies/STRATEGIES.md`; a strategy that needs its own examples or walkthrough gets its own `references/strategies/<name>.md` file, linked from `STRATEGIES.md`.
 - When a rule or piece of guidance belongs to the DEM side of a coupled case, point to Aspherix Assistant instead of writing it here.
